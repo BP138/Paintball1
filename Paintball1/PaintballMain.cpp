@@ -1,13 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include "Game.h"
 #include "Player.h"
 #include "Ball.h"
 
-sf::RectangleShape createField();
 sf::CircleShape createReticule();
 sf::Vector2f calculateReticulePosition(sf::RenderWindow &wndw);
-void positionTeams(std::vector<std::vector<Player*>> &teams, sf::Vector2u &windowSize);
 
 
 
@@ -28,35 +27,16 @@ field.setTexture(&fieldTexture);
 
 
 //Create players vector and teams vector
-std::vector<Player> players;
-std::vector<std::vector<Player*>> teams;
-Player *mainPlayer;
-
 std::cout << "How many players to make? ";
 int noOfPlayers = 0;
-int noOfTeams = 2;
 std::cin >> noOfPlayers;
-for (int i = 0; i < noOfPlayers; i++)
-{
-    Player player;
-    players.push_back(player);
-}
-mainPlayer = &players.at(0);
-mainPlayer->setPlayerPosition(200.0f, 700.0f);
+Game game(2, noOfPlayers);
+game.positionTeams(windowSize);
 
-int pcount = 0;
-for (int t = 0; t < noOfTeams; t++)
-{
-    std::vector<Player*> temp;
-    for (unsigned int i = 0; i < players.size() / noOfTeams; i++)
-    {
-        temp.push_back(&players.at(pcount));
-        pcount++;
-    }
-    teams.push_back(temp);
-}
-std::cout << "Players: " << players.size() << ". Teams: " << teams.size();
-positionTeams(teams, windowSize);
+std::cout << "Teams: " << game.getTeams().size();
+std::cout << "Team 1 size: " << game.getTeamsAt(0).getTeamSize() << std::endl;
+std::cout << "Team 2 size: " << game.getTeamsAt(1).getTeamSize() << std::endl;
+
 
 
 //Create mouse position variable and set position of reticule shape
@@ -81,11 +61,10 @@ sf::Clock clock;
 float dt = 0;
 sf::Time time;
 
-
 //Create event and start game loop
 sf::Event evnt;
-bool play = true;
-while (play)
+
+while (window.isOpen())
 {
     //Events
     while(window.pollEvent(evnt))
@@ -94,7 +73,7 @@ while (play)
         {
             //window closed event
             case sf::Event::Closed:
-                play = false;
+                window.close();
                 break;
 
             //keyboard events
@@ -137,11 +116,10 @@ while (play)
     }
 
     //Keybinds
-    if(wButton) mainPlayer->movePlayer('w', dt);//up
-    if(aButton) mainPlayer->movePlayer('a', dt);//left
-    if(dButton) mainPlayer->movePlayer('d', dt);//right
-    if(sButton) mainPlayer->movePlayer('s', dt); //down
-    if(sButton) teams.at(1).at(1)->movePlayer('s', dt);
+    if(wButton) game.getTeamsAt(0).getTeam().at(0).movePlayer('w', dt);//up
+    if(aButton) game.getTeamsAt(0).getTeam().at(0).movePlayer('a', dt);//left
+    if(dButton) game.getTeamsAt(0).getTeam().at(0).movePlayer('d', dt);//right
+    if(sButton) game.getTeamsAt(0).getTeam().at(0).movePlayer('s', dt); //down
 
 
     //Set reticule position
@@ -153,9 +131,9 @@ while (play)
     if(mouseLPressed)
     {
         mouseLPressed=false;
-        targetVector = reticule.getPosition() - mainPlayer->getPosition();
+        targetVector = reticule.getPosition() - game.getTeamsAt(0).getPlayerAt(0).getPosition();
         Ball paintball(targetVector);
-        paintball.setPosition(mainPlayer->getPosition());
+        paintball.setPosition(game.getTeamsAt(0).getPlayerAt(0).getPosition());
         balls.push_back(paintball);
     }
     for (unsigned int i = 0; i < balls.size(); i++)
@@ -169,11 +147,11 @@ while (play)
     window.clear();
     window.draw(field);
 
-    for (unsigned int i = 0; i < teams.size(); i++)
+    for (unsigned int t = 0; t < game.getTeams().size(); t++)
     {
-        for (unsigned int t = 0; t < teams.at(i).size(); t++)
+        for (unsigned int p = 0; p < game.getTeamsAt(0).getTeamSize(); p++)
         {
-            window.draw(teams.at(i).at(t)->getPlayer());
+            window.draw(game.getTeamsAt(t).getPlayerAt(p).getPlayer());
         }
     }
     window.draw(reticule);
@@ -185,7 +163,6 @@ while (play)
     dt = clock.restart().asSeconds();
 }
 
-window.close();
 
 return 0;
 }
@@ -204,39 +181,4 @@ sf::CircleShape createReticule()
 sf::Vector2f calculateReticulePosition(sf::RenderWindow &wndw)
 {
     return static_cast<sf::Vector2f>(sf::Mouse::getPosition(wndw));
-}
-
-
-
-//Finish this
-void positionTeams(std::vector<std::vector<Player*>> &teams, sf::Vector2u &windowSize)
-{
-    float teamWidth = (teams.at(0).size() * (teams.at(0).at(0)->getRadius() * 2));
-    float spacing;
-    float offset;
-    for (int t = 0; t < teams.size(); t++)
-    {
-        spacing = (teams.at(t).at(0)->getRadius() * 2.0f) + 5.0f;
-        offset = 0.0f;
-        if (t % 2 == 0)
-        {
-            for (int p = 0; p < teams.at(t).size(); p++)
-            {
-                teams.at(t).at(p)->setPlayerPosition(
-                    ((windowSize.x / 2) - teamWidth / 2.0f) + offset, 700.0f );
-                                    std::cout << " " << teams.at(t).at(p)->getRadius();
-                offset += spacing;
-            }
-        }
-        else
-        {
-            for (int p = 0; p < teams.at(t).size(); p++)
-            {
-                teams.at(t).at(p)->setPlayerPosition(
-                    ((windowSize.x / 2) - teamWidth / 2.0f) + offset, 20.0f);
-                std::cout << " " << teams.at(t).at(p)->getRadius();
-                offset += spacing;
-            }
-        }
-    }
 }

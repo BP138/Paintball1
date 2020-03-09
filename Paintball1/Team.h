@@ -1,8 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Player.h"
-#ifndef GAME_H
-#define GAME_H
+#ifndef TEAM_H
+#define TEAM_H
+
+
 
 class Team
 {
@@ -12,12 +14,14 @@ private:
 
 public:
 	Team();
-	Team(Player* &mPlayer);
+	Team(int pPerTeam);
 	~Team() {};
 
-
+	int getTeamSize();
+	std::vector<Player> getTeam();
+	Player getPlayerAt(int index);
 
 };
 
-#endif // !GAME_H
+#endif // !TEAM_H
 
