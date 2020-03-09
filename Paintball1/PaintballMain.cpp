@@ -40,7 +40,6 @@ for (int i = 0; i < noOfPlayers; i++)
 {
     Player player;
     players.push_back(player);
-    players.at(i).setPlayerPosition(15.0f * i, 50.0f);
 }
 mainPlayer = &players.at(0);
 mainPlayer->setPlayerPosition(200.0f, 700.0f);
