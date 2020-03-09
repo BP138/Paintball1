@@ -31,6 +31,7 @@ field.setTexture(&fieldTexture);
 std::vector<Player> players;
 std::vector<std::vector<Player*>> teams;
 Player *mainPlayer;
+
 std::cout << "How many players to make? ";
 int noOfPlayers = 0;
 int noOfTeams = 2;
