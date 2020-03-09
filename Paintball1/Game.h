@@ -1,5 +1,5 @@
 #include <vector>
-#include "Team.h"
+#include "Player.h"
 #ifndef GAME_H
 #define GAME_H
 
@@ -7,17 +7,21 @@
 class Game
 {
 private:
-	int playersPerTeam = 5,
-		noOfTeams = 2;
-	std::vector<Team> teams;
+	int noOfTeams = 2,
+		playersPerTeam = 5;
+		
+	std::vector<Player*> players;
+	std::vector<std::vector<Player>> teams;
 
 public:
 	Game();
 	Game(int noTeams, int pPerTeam);
 	~Game() {};
 
-	void positionTeams(sf::Vector2u wSize);
-	std::vector<Team> getTeams();
-	Team getTeamsAt(int index);
+	std::vector<std::vector<Player>> getTeams();
+	std::vector<Player> getTeam(int index);
+	std::vector<Player*> getPlayers();
+	Player getTeamPlayer(int teamIndex, int playerIndex);
+	//void positionTeams(sf::Vector2u wSize);
 };
 #endif

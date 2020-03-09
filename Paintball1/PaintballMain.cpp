@@ -31,11 +31,11 @@ std::cout << "How many players to make? ";
 int noOfPlayers = 0;
 std::cin >> noOfPlayers;
 Game game(2, noOfPlayers);
-game.positionTeams(windowSize);
+//game.positionTeams(windowSize);
 
 std::cout << "Teams: " << game.getTeams().size();
-std::cout << "Team 1 size: " << game.getTeamsAt(0).getTeamSize() << std::endl;
-std::cout << "Team 2 size: " << game.getTeamsAt(1).getTeamSize() << std::endl;
+std::cout << "Team 1 size: " << game.getTeam(0).size() << std::endl;
+std::cout << "Team 2 size: " << game.getTeam(1).size() << std::endl;
 
 
 
@@ -116,10 +116,10 @@ while (window.isOpen())
     }
 
     //Keybinds
-    if(wButton) game.getTeamsAt(0).getTeam().at(0).movePlayer('w', dt);//up
-    if(aButton) game.getTeamsAt(0).getTeam().at(0).movePlayer('a', dt);//left
-    if(dButton) game.getTeamsAt(0).getTeam().at(0).movePlayer('d', dt);//right
-    if(sButton) game.getTeamsAt(0).getTeam().at(0).movePlayer('s', dt); //down
+    if(wButton) game.getPlayers().at(0)->movePlayer('w', dt);//up
+    if(aButton) game.getPlayers().at(0)->movePlayer('a', dt);//left
+    if(dButton) game.getPlayers().at(0)->movePlayer('d', dt);//right
+    if(sButton) &game.getPlayers().at(0)->movePlayer('s', dt); //down
 
 
     //Set reticule position
@@ -131,9 +131,9 @@ while (window.isOpen())
     if(mouseLPressed)
     {
         mouseLPressed=false;
-        targetVector = reticule.getPosition() - game.getTeamsAt(0).getPlayerAt(0).getPosition();
+        targetVector = reticule.getPosition() - game.getTeamPlayer(0, 0).getPosition();
         Ball paintball(targetVector);
-        paintball.setPosition(game.getTeamsAt(0).getPlayerAt(0).getPosition());
+        paintball.setPosition(game.getTeamPlayer(0, 0).getPosition());
         balls.push_back(paintball);
     }
     for (unsigned int i = 0; i < balls.size(); i++)
@@ -146,15 +146,22 @@ while (window.isOpen())
     //Rendering
     window.clear();
     window.draw(field);
-
-    for (unsigned int t = 0; t < game.getTeams().size(); t++)
+    window.draw(reticule);
+    /*for (unsigned int t = 0; t < game.getTeams().size(); t++)
     {
         for (unsigned int p = 0; p < game.getTeamsAt(0).getTeamSize(); p++)
         {
             window.draw(game.getTeamsAt(t).getPlayerAt(p).getPlayer());
         }
+    }*/
+
+    game.getPlayers().at(0)->setPosition(200.0f, 360.0f);
+    
+    for (int i = 0; i < game.getPlayers().size(); i++)
+    {
+        window.draw(game.getPlayers().at(i)->getPlayer());
     }
-    window.draw(reticule);
+    
     for (unsigned int i = 0; i < balls.size(); i++) {window.draw(balls.at(i).getBall());}
     window.display();
 

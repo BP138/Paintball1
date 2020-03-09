@@ -15,12 +15,22 @@ sf::CircleShape Player::getPlayer()
     return player;
 }
 
+void Player::setPlayerID(int pID)
+{
+    playerID = pID;
+}
+
+int Player::getPlayerID()
+{
+    return playerID;
+}
+
 sf::Vector2f Player::getPosition()
 {
     return player.getPosition();
 }
 
-void Player::setPlayerPosition(float x, float y)
+void Player::setPosition(float x, float y)
 {
     player.setPosition(x, y);
 }

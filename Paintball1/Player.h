@@ -7,6 +7,7 @@ class Player
 {
 private:
     const float plRADIUS = 8.0f;
+    int playerID = -1;
     sf::Color plColor;
     sf::CircleShape player;
 
@@ -14,8 +15,10 @@ public:
     Player();
     ~Player(){};
     sf::CircleShape getPlayer();
+    void setPlayerID(int pID);
+    int getPlayerID();
     sf::Vector2f getPosition();
-    void setPlayerPosition(float x, float y);
+    void setPosition(float x, float y);
     void movePlayer(char key, float dt);
     float getRadius();
 

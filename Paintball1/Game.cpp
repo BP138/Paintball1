@@ -5,12 +5,18 @@ Game::Game()
 {
     for (int t = 0; t < noOfTeams; t++)
     {
-        Team team;
+        std::vector<Player> tempTeam;
         for (int p = 0; p < playersPerTeam; p++)
         {
-
+            Player player;
+            player.setPlayerID(p);
+            tempTeam.push_back(player);
         }
-        teams.push_back(team);
+        teams.push_back(tempTeam);
+        for (int i = 0; i < playersPerTeam; i++)
+        {
+            players.push_back(&teams.at(t).at(i));
+        }
     }
 }
 
@@ -18,13 +24,50 @@ Game::Game(int noTeams, int pPerTeam)
 {
     noOfTeams = noTeams;
     playersPerTeam = pPerTeam;
-    for (int i = 0; i < noOfTeams; i++)
+    for (int t = 0; t < noOfTeams; t++)
     {
-        Team team(pPerTeam);
-        teams.push_back(team);
+        std::vector<Player> tempTeam;
+        for (int p = 0; p < playersPerTeam; p++)
+        {
+            Player player;
+            player.setPlayerID(p);
+            tempTeam.push_back(player);
+        }
+        teams.push_back(tempTeam);
+        for (int i = 0; i < playersPerTeam; i++)
+        {
+            players.push_back(&teams.at(t).at(i));
+        }
     }
 }
 
+
+//Gets teams vector (vector of vector)
+std::vector<std::vector<Player>> Game::getTeams()
+{
+    return teams;
+}
+
+//Returns vector of players from teams vector
+std::vector<Player> Game::getTeam(int index)
+{
+    return teams.at(index);
+}
+
+std::vector<Player*> Game::getPlayers()
+{
+    return players;
+}
+
+//Return a player shape specified
+Player Game::getTeamPlayer(int teamIndex, int playerIndex)
+{
+    return teams.at(teamIndex).at(playerIndex);
+}
+
+
+/*
+//Position Teams
 void Game::positionTeams(sf::Vector2u wSize)
 {
     {
@@ -60,13 +103,5 @@ void Game::positionTeams(sf::Vector2u wSize)
         }
     }
 }
+*/
 
-std::vector<Team> Game::getTeams()
-{
-    return teams;
-}
-
-Team Game::getTeamsAt(int index)
-{
-    return teams.at(index);
-}
