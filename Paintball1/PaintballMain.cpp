@@ -119,7 +119,7 @@ while (window.isOpen())
     if(wButton) game.getPlayers().at(0)->movePlayer('w', dt);//up
     if(aButton) game.getPlayers().at(0)->movePlayer('a', dt);//left
     if(dButton) game.getPlayers().at(0)->movePlayer('d', dt);//right
-    if(sButton) &game.getPlayers().at(0)->movePlayer('s', dt); //down
+    if(sButton) game.getPlayers().at(0)->movePlayer('s', dt); //down
 
 
     //Set reticule position
