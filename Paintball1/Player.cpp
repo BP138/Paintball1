@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include "Player.h"
 #include <iostream>
+#include "Player.h"
 
 
 Player::Player()
@@ -11,10 +11,12 @@ Player::Player()
     player.setOrigin(plRADIUS, plRADIUS);
 };
 
+
 sf::CircleShape Player::getPlayer()
 {
     return player;
 }
+
 
 void Player::setPlayerID(int pID)
 {
@@ -31,6 +33,12 @@ void Player::setTeamID(int tID)
     teamID = tID;
 }
 
+int Player::getTeamID()
+{
+    return teamID;
+}
+
+
 sf::Vector2f Player::getPosition()
 {
     return player.getPosition();
@@ -40,6 +48,7 @@ void Player::setPosition(float x, float y)
 {
     player.setPosition(x, y);
 }
+
 
 void Player::movePlayer(char key, float dt)
 {

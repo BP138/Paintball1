@@ -1,7 +1,6 @@
+#include <SFML/Graphics.hpp>
 #ifndef PLAYER_H
 #define PLAYER_H
-#include <SFML/Graphics.hpp>
-
 
 class Player
 {
@@ -15,10 +14,13 @@ private:
 public:
     Player();
     ~Player(){};
+
     sf::CircleShape getPlayer();
+
     void setPlayerID(int pID);
     int getPlayerID();
     void setTeamID(int tID);
+    int getTeamID();
     sf::Vector2f getPosition();
     void setPosition(float x, float y);
     void movePlayer(char key, float dt);
