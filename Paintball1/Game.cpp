@@ -79,15 +79,13 @@ std::vector<Player>& Game::getPlayers()
 //this still needs to be fixed to put the teams evenly across the middle
 void Game::positionTeams(sf::Vector2u wSize)
 {
-    {   float playerWidth = players.at(0).getRadius() * 2.0f;
-        float teamWidth = (playersPerTeam * playerWidth);
-        float spacing; 
-        float offset;
-        for (int t = 0; t < teams.size(); t++)
+    {   float playerWidth = players.at(0).getRadius() * 2.0f,
+              teamWidth = (playersPerTeam * playerWidth),
+              spacing, offset;
+        for (unsigned int t = 0; t < teams.size(); t++)
         {
             spacing = 20.0f;
             offset = 0.0f;
-
             if (t % 2 == 0)
             {
                 for (int p = 0; p < playersPerTeam; p++)
