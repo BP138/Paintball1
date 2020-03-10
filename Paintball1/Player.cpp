@@ -9,6 +9,7 @@ Player::Player()
     player.setRadius(plRADIUS);
     player.setFillColor(plColor);
     player.setOrigin(plRADIUS, plRADIUS);
+    ammo = 200;
 };
 
 
@@ -68,8 +69,25 @@ float Player::getRadius()
 }
 
 
-void Player::shoot(sf::Vector2f mousePosition)
+void Player::shoot(sf::Vector2f targetPosition)
 {
-    Ball paintball;
-    balls.push_back(paintball);
+    if (gun.getAmmo() > 0)
+    {
+        Ball paintball(targetPosition);
+        balls.push_back(paintball);
+        gun.removeAmmo();
+    }
+}
+
+void Player::getBalls(std::vector<Ball> ballsOnField&)
+{
+    for (auto &ball : balls)
+    {
+        ballsOnField.push_back(ball);
+    }
+}
+
+void Player::calculateTargetPosition()
+{
+    targetPosition = ()
 }

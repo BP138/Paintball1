@@ -105,3 +105,12 @@ void Game::positionTeams(sf::Vector2u wSize)
         }
     }
 }
+
+
+void Game::retrievePlayerBalls()
+{
+    for (int i = 0; i < players.size(); i++)
+    {
+
+    }
+}

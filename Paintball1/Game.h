@@ -12,6 +12,7 @@ private:
 		
 	std::vector<Player> players;
 	std::vector<std::vector<Player*>> teams;
+	std::vector<Ball> ballsOnField;
 
 public:
 	Game();
@@ -23,6 +24,7 @@ public:
 	Player& getTeamPlayer(int teamIndex, int playerIndex);
 	std::vector<Player>& getPlayers();
 	void positionTeams(sf::Vector2u wSize);
+	void retrievePlayerBalls();
 };
 #endif
 

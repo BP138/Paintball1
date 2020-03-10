@@ -2,13 +2,11 @@
 #include <iostream>
 Ball::Ball()
 {
-    radius = 5.0f;
     ball.setRadius(radius);
 }
 
 Ball::Ball(sf::Vector2f targVector)
 {
-    radius = 5.0f;
     ball.setRadius(radius);
     targetVector = targVector;
     ball.setFillColor(sf::Color::Blue);

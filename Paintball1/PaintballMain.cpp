@@ -147,8 +147,7 @@ while (window.isOpen())
     window.clear();
     window.draw(field);
     window.draw(reticule);
-    for (int i = 0; i < game.getPlayers().size(); i++)
-    {
+    for (int i = 0; i < game.getPlayers().size(); i++){
         window.draw(game.getPlayers().at(i).getPlayer());
     }
     for (unsigned int i = 0; i < balls.size(); i++) {window.draw(balls.at(i).getBall());}
