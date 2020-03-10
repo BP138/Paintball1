@@ -18,11 +18,21 @@ public:
 	Game(int noTeams, int pPerTeam);
 	~Game() {};
 
-	std::vector<std::vector<Player*>> getTeams();
-	std::vector<Player*> getTeam(int index);
-	Player getTeamPlayer(int teamIndex, int playerIndex);
-	std::vector<Player> getPlayers();
-	
-	//void positionTeams(sf::Vector2u wSize);
+	std::vector<std::vector<Player*>>& getTeams();
+	std::vector<Player*>& getTeam(int index);
+	Player& getTeamPlayer(int teamIndex, int playerIndex);
+	std::vector<Player>& getPlayers();
+	void positionTeams(sf::Vector2u wSize);
 };
 #endif
+
+
+
+
+
+
+
+
+
+
+

@@ -26,14 +26,14 @@ fieldTexture.loadFromFile("green-grass-texture-background.png");
 field.setTexture(&fieldTexture);
 
 
-//Create players vector and teams vector
+//Determine players per team and create game
 std::cout << "How many players per team? ";
 int pPerTeam = 0;
 std::cin >> pPerTeam;
 Game game(2, pPerTeam);
-//game.positionTeams(windowSize);
+game.positionTeams(windowSize);
 
-std::cout << "Teams: " << game.getTeams().size() << std::endl;
+std::cout << "Total players: " << game.getPlayers().size() << std::endl;
 std::cout << "Team 1 size: " << game.getTeam(0).size() << std::endl;
 std::cout << "Team 2 size: " << game.getTeam(1).size() << std::endl;
 
@@ -80,8 +80,8 @@ while (window.isOpen())
             case sf::Event::KeyPressed:
                 if (evnt.key.code == sf::Keyboard::W) wButton = true;
                 if (evnt.key.code == sf::Keyboard::A) aButton = true;
-                if (evnt.key.code == sf::Keyboard::S) sButton = true;
-                if (evnt.key.code == sf::Keyboard::D) dButton = true;
+                if (evnt.key.code == sf::Keyboard::S) sButton = true; 
+                if (evnt.key.code == sf::Keyboard::D) dButton = true; 
                 break;
 
             case sf::Event::KeyReleased:
@@ -102,6 +102,7 @@ while (window.isOpen())
             //window resize event
             case sf::Event::Resized:
                 printf("New window width: %i New window height: %i\n", evnt.size.width, evnt.size.height);
+                windowSize = window.getSize();
                 break;
 
             /*
@@ -121,13 +122,12 @@ while (window.isOpen())
     if(dButton) game.getTeamPlayer(0,0).movePlayer('d', dt);//right
     if(sButton) game.getTeamPlayer(0,0).movePlayer('s', dt); //down
 
-
     //Set reticule position
     sf::Vector2f mousePosition = calculateReticulePosition(window);
     reticule.setPosition(mousePosition);
 
-
     //shoot
+    //Need to figure out how to put this in its own function
     if(mouseLPressed)
     {
         mouseLPressed=false;
@@ -142,27 +142,17 @@ while (window.isOpen())
         }
 
 
-
+    
     //Rendering
     window.clear();
-    //window.draw(field);
+    window.draw(field);
     window.draw(reticule);
-    /*for (unsigned int t = 0; t < game.getTeams().size(); t++)
-    {
-        for (unsigned int p = 0; p < game.getTeamsAt(0).getTeamSize(); p++)
-        {
-            window.draw(game.getTeamsAt(t).getPlayerAt(p).getPlayer());
-        }
-    }*/
-
-    game.getTeamPlayer(0, 0).setPosition(200.0f, 360.0f);
-    window.draw(game.getTeamPlayer(0, 0).getPlayer());
     for (int i = 0; i < game.getPlayers().size(); i++)
     {
         window.draw(game.getPlayers().at(i).getPlayer());
     }
-    
     for (unsigned int i = 0; i < balls.size(); i++) {window.draw(balls.at(i).getBall());}
+
     window.display();
 
 
