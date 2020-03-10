@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include "Ball.h"
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -10,6 +12,7 @@ private:
         teamID = -1;
     sf::Color plColor;
     sf::CircleShape player;
+    std::vector<Ball> balls;
 
 public:
     Player();
@@ -26,5 +29,6 @@ public:
     void movePlayer(char key, float dt);
     float getRadius();
 
+    void shoot(sf::Vector2f mousePosition);
 };
 #endif

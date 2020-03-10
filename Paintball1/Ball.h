@@ -6,8 +6,8 @@
 class Ball
 {
 private:
-    float radius;
     sf::CircleShape ball;
+    float radius;
     sf::Vector2f targetVector;
     float speed = 700.0f;
 

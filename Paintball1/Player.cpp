@@ -66,3 +66,10 @@ float Player::getRadius()
 {
     return plRADIUS;
 }
+
+
+void Player::shoot(sf::Vector2f mousePosition)
+{
+    Ball paintball;
+    balls.push_back(paintball);
+}

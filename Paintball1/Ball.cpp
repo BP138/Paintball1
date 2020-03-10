@@ -1,5 +1,5 @@
 #include "Ball.h"
-
+#include <iostream>
 Ball::Ball()
 {
     radius = 5.0f;
@@ -29,6 +29,7 @@ void Ball::shootBall(float dt)
 {
     //normalize velocity
     float vectorMagnitude = static_cast<float>(sqrt((pow(targetVector.x, 2))+(pow(targetVector.y, 2))));
+    std::cout << vectorMagnitude << " ";
     sf::Vector2f normalizedVect = targetVector / vectorMagnitude;
     //shoot ball
     ball.move(normalizedVect * speed * dt);
