@@ -32,7 +32,7 @@ public:
     void setPosition(float x, float y);
     void movePlayer(char key, float dt);
     float getRadius();
-    void calculateTargetPosition();
+    sf::Vector2f calculateTargetVector(sf::Vector2f mousePos);
 
     void shoot(sf::Vector2f mousePosition);
     void getBalls(std::vector<Ball> ballsOnField&);

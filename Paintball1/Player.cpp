@@ -68,15 +68,13 @@ float Player::getRadius()
     return plRADIUS;
 }
 
-
+//shoot
 void Player::shoot(sf::Vector2f targetPosition)
 {
-    if (gun.getAmmo() > 0)
-    {
-        Ball paintball(targetPosition);
-        balls.push_back(paintball);
-        gun.removeAmmo();
-    }
+    gun.shoot(calculateTargetVector(targetPosition));
+    balls.push_back(paintball);
+    gun.removeAmmo();
+
 }
 
 void Player::getBalls(std::vector<Ball> ballsOnField&)
@@ -87,7 +85,13 @@ void Player::getBalls(std::vector<Ball> ballsOnField&)
     }
 }
 
-void Player::calculateTargetPosition()
+sf::Vector2f Player::calculateTargetVector(sf::Vector2f mousePos)
 {
-    targetPosition = ()
+    sf::Vector2f targetVector = mousePos - player.getPosition();
+    sf::Vector2f normalizedVect = targetVector / static_cast<float>(sqrt((pow(targetVector.x, 2)) +
+                                            (pow(targetVector.y, 2))));
+    return normalizedVect;
 }
+
+//shoot ball
+ball.move(normalizedVect* speed* dt);

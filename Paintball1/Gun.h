@@ -14,7 +14,7 @@ public:
 	Gun();
 	~Gun() {};
 	
-	void shoot();
+	void shoot(sf::Vector2f targetVect);
 	int getAmmo();
 	void removeAmmo();
 };

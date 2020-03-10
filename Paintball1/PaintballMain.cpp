@@ -45,7 +45,7 @@ sf::CircleShape reticule = createReticule();
 
 //Create paintbll projectile
 std::vector<Ball> balls;
-sf::Vector2f targetVector;
+
 
 
 //Key event booleans
@@ -123,13 +123,17 @@ while (window.isOpen())
     if(sButton) game.getTeamPlayer(0,0).movePlayer('s', dt); //down
 
     //Set reticule position
-    sf::Vector2f mousePosition = calculateReticulePosition(window);
+    sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
     reticule.setPosition(mousePosition);
 
     //shoot
     //Need to figure out how to put this in its own function
     if(mouseLPressed)
     {
+        game.getTeamPlayer(0, 0).shoot(reticule.getPosition());
+
+
+
         mouseLPressed=false;
         targetVector = reticule.getPosition() - game.getTeamPlayer(0, 0).getPosition();
         Ball paintball(targetVector);
