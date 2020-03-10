@@ -130,7 +130,7 @@ while (window.isOpen())
     //Need to figure out how to put this in its own function
     if(mouseLPressed)
     {
-        game.getTeamPlayer(0, 0).shoot(reticule.getPosition());
+        game.getTeamPlayer(0, 0).shootGun(mousePosition, dt);
 
 
 

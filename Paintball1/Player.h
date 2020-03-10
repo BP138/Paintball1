@@ -11,11 +11,11 @@ private:
     const float plRADIUS = 8.0f;
     int playerID = -1,
         teamID = -1;
-    sf::Vector2f targetPosition;    
-        
-    sf::Color plColor;
     sf::CircleShape player;
-    std::vector<Ball> balls;
+    sf::Color plColor;
+
+    sf::Vector2f targetPosition;  
+    std::vector<Ball> ballsFired;
     Gun gun;
 
 public:
@@ -23,18 +23,21 @@ public:
     ~Player(){};
 
     sf::CircleShape getPlayer();
+    float getRadius();
 
-    void setPlayerID(int pID);
     int getPlayerID();
-    void setTeamID(int tID);
+    void setPlayerID(int pID);
+
     int getTeamID();
+    void setTeamID(int tID);
+    
     sf::Vector2f getPosition();
     void setPosition(float x, float y);
+
     void movePlayer(char key, float dt);
-    float getRadius();
+    
     sf::Vector2f calculateTargetVector(sf::Vector2f mousePos);
 
-    void shoot(sf::Vector2f mousePosition);
-    void getBalls(std::vector<Ball> ballsOnField&);
+    void shootGun(sf::Vector2f mousePosition,float dt);
 };
 #endif

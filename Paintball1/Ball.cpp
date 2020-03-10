@@ -23,12 +23,7 @@ void Ball::setPosition(sf::Vector2f pPosition)
     ball.setPosition(pPosition);
 }
 
-void Ball::shootBall(float dt)
+void Ball::shootBall(float dt, float velocity)
 {
-    //normalize velocity
-    float vectorMagnitude = static_cast<float>(sqrt((pow(targetVector.x, 2))+(pow(targetVector.y, 2))));
-    std::cout << vectorMagnitude << " ";
-    sf::Vector2f normalizedVect = targetVector / vectorMagnitude;
-    //shoot ball
-    ball.move(normalizedVect * speed * dt);
+    ball.move(targetVector * velocity * dt);
 }

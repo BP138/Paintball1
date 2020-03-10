@@ -9,48 +9,56 @@ Player::Player()
     player.setRadius(plRADIUS);
     player.setFillColor(plColor);
     player.setOrigin(plRADIUS, plRADIUS);
-    ammo = 200;
 };
 
 
+//Get Player CircleShape
 sf::CircleShape Player::getPlayer()
 {
     return player;
 }
 
+//Get player's radius
+float Player::getRadius()
+{
+    return plRADIUS;
+}
 
+
+//Player ID getter and setter
+int Player::getPlayerID()
+{
+    return playerID;
+}
 void Player::setPlayerID(int pID)
 {
     playerID = pID;
 }
 
-int Player::getPlayerID()
-{
-    return playerID;
-}
 
+//Player's team ID getter and setter
+int Player::getTeamID()
+{
+    return teamID;
+}
 void Player::setTeamID(int tID)
 {
     teamID = tID;
 }
 
-int Player::getTeamID()
-{
-    return teamID;
-}
 
-
+//Player position getter and setter
 sf::Vector2f Player::getPosition()
 {
     return player.getPosition();
 }
-
 void Player::setPosition(float x, float y)
 {
     player.setPosition(x, y);
 }
 
 
+//movePlayer
 void Player::movePlayer(char key, float dt)
 {
     switch(key)
@@ -63,35 +71,26 @@ void Player::movePlayer(char key, float dt)
     }
 }
 
-float Player::getRadius()
-{
-    return plRADIUS;
-}
 
-//shoot
-void Player::shoot(sf::Vector2f targetPosition)
-{
-    gun.shoot(calculateTargetVector(targetPosition));
-    balls.push_back(paintball);
-    gun.removeAmmo();
-
-}
-
-void Player::getBalls(std::vector<Ball> ballsOnField&)
-{
-    for (auto &ball : balls)
-    {
-        ballsOnField.push_back(ball);
-    }
-}
-
+//Calculate target direction
 sf::Vector2f Player::calculateTargetVector(sf::Vector2f mousePos)
 {
     sf::Vector2f targetVector = mousePos - player.getPosition();
     sf::Vector2f normalizedVect = targetVector / static_cast<float>(sqrt((pow(targetVector.x, 2)) +
-                                            (pow(targetVector.y, 2))));
+        (pow(targetVector.y, 2))));
     return normalizedVect;
 }
 
-//shoot ball
-ball.move(normalizedVect* speed* dt);
+
+//shoot
+void Player::shootGun(sf::Vector2f targetPosition, float dt)
+{
+    if (gun.getAmmo() > 0)
+    {
+        Ball paintball(calculateTargetVector(targetPosition))
+        gun.shoot(, dt);
+    }
+    
+}
+
+

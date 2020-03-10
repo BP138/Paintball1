@@ -19,7 +19,7 @@ public:
 
     sf::CircleShape getBall();
     void setPosition(sf::Vector2f pPosition);
-    void shootBall(float dt);
+    void shootBall(float dt, float velocity);
 
 };
 #endif
