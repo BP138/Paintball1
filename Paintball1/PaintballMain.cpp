@@ -27,13 +27,13 @@ field.setTexture(&fieldTexture);
 
 
 //Create players vector and teams vector
-std::cout << "How many players to make? ";
-int noOfPlayers = 0;
-std::cin >> noOfPlayers;
-Game game(2, noOfPlayers);
+std::cout << "How many players per team? ";
+int pPerTeam = 0;
+std::cin >> pPerTeam;
+Game game(2, pPerTeam);
 //game.positionTeams(windowSize);
 
-std::cout << "Teams: " << game.getTeams().size();
+std::cout << "Teams: " << game.getTeams().size() << std::endl;
 std::cout << "Team 1 size: " << game.getTeam(0).size() << std::endl;
 std::cout << "Team 2 size: " << game.getTeam(1).size() << std::endl;
 
@@ -116,10 +116,10 @@ while (window.isOpen())
     }
 
     //Keybinds
-    if(wButton) game.getPlayers().at(0)->movePlayer('w', dt);//up
-    if(aButton) game.getPlayers().at(0)->movePlayer('a', dt);//left
-    if(dButton) game.getPlayers().at(0)->movePlayer('d', dt);//right
-    if(sButton) game.getPlayers().at(0)->movePlayer('s', dt); //down
+    if(wButton) game.getTeamPlayer(0,0).movePlayer('w', dt);//up
+    if(aButton) game.getTeamPlayer(0,0).movePlayer('a', dt);//left
+    if(dButton) game.getTeamPlayer(0,0).movePlayer('d', dt);//right
+    if(sButton) game.getTeamPlayer(0,0).movePlayer('s', dt); //down
 
 
     //Set reticule position
@@ -145,7 +145,7 @@ while (window.isOpen())
 
     //Rendering
     window.clear();
-    window.draw(field);
+    //window.draw(field);
     window.draw(reticule);
     /*for (unsigned int t = 0; t < game.getTeams().size(); t++)
     {
@@ -155,11 +155,11 @@ while (window.isOpen())
         }
     }*/
 
-    game.getPlayers().at(0)->setPosition(200.0f, 360.0f);
-    
+    game.getTeamPlayer(0, 0).setPosition(200.0f, 360.0f);
+    window.draw(game.getTeamPlayer(0, 0).getPlayer());
     for (int i = 0; i < game.getPlayers().size(); i++)
     {
-        window.draw(game.getPlayers().at(i)->getPlayer());
+        window.draw(game.getPlayers().at(i).getPlayer());
     }
     
     for (unsigned int i = 0; i < balls.size(); i++) {window.draw(balls.at(i).getBall());}

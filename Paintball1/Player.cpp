@@ -25,6 +25,11 @@ int Player::getPlayerID()
     return playerID;
 }
 
+void Player::setTeamID(int tID)
+{
+    teamID = tID;
+}
+
 sf::Vector2f Player::getPosition()
 {
     return player.getPosition();

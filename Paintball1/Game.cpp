@@ -3,20 +3,19 @@
 
 Game::Game()
 {
+    int IDcounter = 0;
     for (int t = 0; t < noOfTeams; t++)
     {
-        std::vector<Player> tempTeam;
+        std::vector<Player*> tempTeam;
         for (int p = 0; p < playersPerTeam; p++)
         {
             Player player;
-            player.setPlayerID(p);
-            tempTeam.push_back(player);
+            player.setPlayerID(IDcounter);
+            player.setTeamID(t);
+            players.push_back(player);
+            tempTeam.push_back(&players.at(IDcounter));
         }
         teams.push_back(tempTeam);
-        for (int i = 0; i < playersPerTeam; i++)
-        {
-            players.push_back(&teams.at(t).at(i));
-        }
     }
 }
 
@@ -24,46 +23,49 @@ Game::Game(int noTeams, int pPerTeam)
 {
     noOfTeams = noTeams;
     playersPerTeam = pPerTeam;
+    int IDcounter = 0;
     for (int t = 0; t < noOfTeams; t++)
     {
-        std::vector<Player> tempTeam;
+        std::vector<Player*> tempTeam;
         for (int p = 0; p < playersPerTeam; p++)
         {
             Player player;
-            player.setPlayerID(p);
-            tempTeam.push_back(player);
+            player.setPlayerID(IDcounter);
+            player.setTeamID(t);
+            players.push_back(player);
+            tempTeam.push_back(&players.at(IDcounter));
+            IDcounter++;
         }
         teams.push_back(tempTeam);
-        for (int i = 0; i < playersPerTeam; i++)
-        {
-            players.push_back(&teams.at(t).at(i));
-        }
     }
 }
 
 
-//Gets teams vector (vector of vector)
-std::vector<std::vector<Player>> Game::getTeams()
+//getTeams()
+std::vector<std::vector<Player*>> Game::getTeams()
 {
     return teams;
 }
 
-//Returns vector of players from teams vector
-std::vector<Player> Game::getTeam(int index)
+//getTeam()
+std::vector<Player*> Game::getTeam(int index)
 {
     return teams.at(index);
 }
 
-std::vector<Player*> Game::getPlayers()
+//getTeamPlayer()
+Player Game::getTeamPlayer(int teamIndex, int playerIndex)
+{
+    return *teams.at(teamIndex).at(playerIndex);
+}
+
+//getPlayers()
+std::vector<Player> Game::getPlayers()
 {
     return players;
 }
 
-//Return a player shape specified
-Player Game::getTeamPlayer(int teamIndex, int playerIndex)
-{
-    return teams.at(teamIndex).at(playerIndex);
-}
+
 
 
 /*
