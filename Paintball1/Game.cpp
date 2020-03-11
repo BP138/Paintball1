@@ -72,6 +72,10 @@ std::vector<Player>& Game::getPlayers()
 {
     return players;
 }
+int Game::getNumberofPlayers()
+{
+    return players.size();
+}
 
 
 
@@ -107,18 +111,3 @@ void Game::positionTeams(sf::Vector2u wSize)
 }
 
 
-void Game::retrievePlayerBalls()
-{
-    for (int i = 0; i < players.size(); i++)
-    {
-        ballsOnField.push_back(players.at(i).getBallsFired());
-        //std::cout << ballsOnField.size() << std::endl;
-        players.at(i).emptyBallsFired();
-        //std::cout << ballsOnField.size() << std::endl;
-    }
-}
-
-std::vector<std::vector<Ball>>& Game::getBallsOnField()
-{
-    return ballsOnField;
-}

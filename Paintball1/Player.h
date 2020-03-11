@@ -38,7 +38,7 @@ public:
 
     void movePlayer(char key, float dt);
 
-    std::vector<Ball> getBallsFired();
+    std::vector<Ball>& getBallsFired();
     void emptyBallsFired();
     
     sf::Vector2f calculateTargetVector(sf::Vector2f mousePos);

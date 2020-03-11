@@ -125,16 +125,14 @@ while (window.isOpen())
     if(mouseLPressed)
     {
         mouseLPressed = false;
-        game.getTeamPlayer(0, 0).shootGun(mousePosition);   
+        game.getTeamPlayer(0, 0).shootGun(mousePosition);
     }
-    game.retrievePlayerBalls();
-    for (int p = 0; p < game.getBallsOnField().size(); p++)
+
+    for (int p = 0; p < game.getNumberofPlayers(); p++)
     {
-        
-        for (int b = 0; b < game.getBallsOnField().at(p).size(); b++)
+        for (int b = 0; b < game.getPlayers().at(p).getBallsFired().size(); b++)
         {
-            game.getBallsOnField().at(p).at(b).shootBall(dt);
-            
+            game.getPlayers().at(p).getBallsFired().at(b).shootBall(dt);
         }
     }
 
@@ -146,15 +144,16 @@ while (window.isOpen())
     window.draw(field);
     window.draw(reticule);
 
-    for (int i = 0; i < game.getPlayers().size(); i++){
-        window.draw(game.getPlayers().at(i).getPlayer());
+    for (int p = 0; p < game.getNumberofPlayers(); p++){
+        window.draw(game.getPlayers().at(p).getPlayer());
     }
 
-    for (int p = 0; p < game.getBallsOnField().size(); p++)
+    for (int p = 0; p < game.getNumberofPlayers(); p++)
     {
-        for (int b = 0; b < game.getBallsOnField().at(p).size(); b++)
+        for (int b = 0; b < game.getPlayers().at(p).getBallsFired().size(); b++)
         {
-            window.draw(game.getBallsOnField().at(p).at(b).getBall());
+            std::cout << b << std::endl;
+            window.draw(game.getPlayers().at(p).getBallsFired().at(b).getBall());
         }
     }
 

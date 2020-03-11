@@ -31,5 +31,5 @@ void Ball::setPosition(sf::Vector2f pPosition)
 
 void Ball::shootBall(float dt)
 {
-    ball.move(targetVector * velocity * dt);
+    ball.move(targetVector * velocity * dt); 
 }

@@ -91,15 +91,15 @@ void Player::shootGun(sf::Vector2f targetPosition)
         //std::cout << "Normalized vector: " << "(" << calculateTargetVector(targetPosition).x << "," << calculateTargetVector(targetPosition).y << ")" << std::endl;
         Ball paintball(calculateTargetVector(targetPosition), player.getPosition());
         ballsFired.push_back(paintball);
-        std::cout << "Balls fired: " << ballsFired.size() << std::endl;
         ballsInHopper--;
+        std::cout << "balls fired: " << ballsFired.size() << std::endl;
     }
     else std::cout << "Hopper empty";
     
 }
 
 
-std::vector<Ball> Player::getBallsFired()
+std::vector<Ball>& Player::getBallsFired()
 {
     return ballsFired;
 }
