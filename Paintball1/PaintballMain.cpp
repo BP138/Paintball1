@@ -38,15 +38,8 @@ std::cout << "Team 1 size: " << game.getTeam(0).size() << std::endl;
 std::cout << "Team 2 size: " << game.getTeam(1).size() << std::endl;
 
 
-
 //Create mouse position variable and set position of reticule shape
 sf::CircleShape reticule = createReticule();
-
-
-//Create paintbll projectile
-std::vector<Ball> balls;
-
-
 
 //Key event booleans
 bool wButton = false;
@@ -126,24 +119,25 @@ while (window.isOpen())
     sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
     reticule.setPosition(mousePosition);
 
+
     //shoot
     //Need to figure out how to put this in its own function
     if(mouseLPressed)
     {
-        game.getTeamPlayer(0, 0).shootGun(mousePosition, dt);
-
-
-
-        mouseLPressed=false;
-        targetVector = reticule.getPosition() - game.getTeamPlayer(0, 0).getPosition();
-        Ball paintball(targetVector);
-        paintball.setPosition(game.getTeamPlayer(0, 0).getPosition());
-        balls.push_back(paintball);
+        mouseLPressed = false;
+        game.getTeamPlayer(0, 0).shootGun(mousePosition);   
     }
-    for (unsigned int i = 0; i < balls.size(); i++)
+    game.retrievePlayerBalls();
+    for (int p = 0; p < game.getBallsOnField().size(); p++)
+    {
+        
+        for (int b = 0; b < game.getBallsOnField().at(p).size(); b++)
         {
-            balls.at(i).shootBall(dt);
+            game.getBallsOnField().at(p).at(b).shootBall(dt);
+            
         }
+    }
+
 
 
     
@@ -151,14 +145,22 @@ while (window.isOpen())
     window.clear();
     window.draw(field);
     window.draw(reticule);
+
     for (int i = 0; i < game.getPlayers().size(); i++){
         window.draw(game.getPlayers().at(i).getPlayer());
     }
-    for (unsigned int i = 0; i < balls.size(); i++) {window.draw(balls.at(i).getBall());}
+
+    for (int p = 0; p < game.getBallsOnField().size(); p++)
+    {
+        for (int b = 0; b < game.getBallsOnField().at(p).size(); b++)
+        {
+            window.draw(game.getBallsOnField().at(p).at(b).getBall());
+        }
+    }
 
     window.display();
 
-
+   
     //Restart the clock and set dt to the time since the clock was last restarted
     dt = clock.restart().asSeconds();
 }

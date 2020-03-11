@@ -10,16 +10,18 @@ private:
     float radius = 5.0f,
           speed = 700.0f;
     sf::Vector2f targetVector;
+    float velocity = 500.0f;
     
 
 public:
     Ball();
-    Ball(sf::Vector2f targVector);
+    Ball(sf::Vector2f targVector, sf::Vector2f spawnPosition);
     ~Ball(){};
 
     sf::CircleShape getBall();
+    float getVelocity();
     void setPosition(sf::Vector2f pPosition);
-    void shootBall(float dt, float velocity);
+    void shootBall(float dt);
 
 };
 #endif

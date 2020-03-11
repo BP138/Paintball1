@@ -14,7 +14,7 @@ public:
 	Gun();
 	~Gun() {};
 	
-	Ball shoot(sf::Vector2f targetVect, float dt);
+	void shootBall(Ball& ball);
 	void fillHopper();
 	int getAmmo();
 };

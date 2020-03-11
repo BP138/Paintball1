@@ -83,14 +83,27 @@ sf::Vector2f Player::calculateTargetVector(sf::Vector2f mousePos)
 
 
 //shoot
-void Player::shootGun(sf::Vector2f targetPosition, float dt)
+void Player::shootGun(sf::Vector2f targetPosition)
 {
-    if (gun.getAmmo() > 0)
+    if (ballsInHopper > 0)
     {
-        Ball paintball(calculateTargetVector(targetPosition))
-        gun.shoot(, dt);
+        //std::cout << "Target position: " << "(" << targetPosition.x << "," << targetPosition.y << ")" << std::endl;
+        //std::cout << "Normalized vector: " << "(" << calculateTargetVector(targetPosition).x << "," << calculateTargetVector(targetPosition).y << ")" << std::endl;
+        Ball paintball(calculateTargetVector(targetPosition), player.getPosition());
+        ballsFired.push_back(paintball);
+        std::cout << "Balls fired: " << ballsFired.size() << std::endl;
+        ballsInHopper--;
     }
+    else std::cout << "Hopper empty";
     
 }
 
 
+std::vector<Ball> Player::getBallsFired()
+{
+    return ballsFired;
+}
+void Player::emptyBallsFired()
+{
+    ballsFired.clear();
+}

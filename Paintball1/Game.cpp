@@ -111,6 +111,14 @@ void Game::retrievePlayerBalls()
 {
     for (int i = 0; i < players.size(); i++)
     {
-
+        ballsOnField.push_back(players.at(i).getBallsFired());
+        //std::cout << ballsOnField.size() << std::endl;
+        players.at(i).emptyBallsFired();
+        //std::cout << ballsOnField.size() << std::endl;
     }
+}
+
+std::vector<std::vector<Ball>>& Game::getBallsOnField()
+{
+    return ballsOnField;
 }

@@ -6,14 +6,11 @@ Gun::Gun()
 
 }
 
-Ball Gun::shoot(sf::Vector2f targetVect, float dt)
+void Gun::shootBall(Ball &ball)
 {
 	if (hopperCount > 0)
 	{
-		Ball paintball(targetVect);
-		paintball.shootBall(dt);
-		hopperCount--;
-		return paintball;
+
 	}
 }
 

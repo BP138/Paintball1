@@ -9,8 +9,10 @@ class Player
 {
 private:
     const float plRADIUS = 8.0f;
+
     int playerID = -1,
         teamID = -1;
+    unsigned int ballsInHopper = 200;
     sf::CircleShape player;
     sf::Color plColor;
 
@@ -35,9 +37,12 @@ public:
     void setPosition(float x, float y);
 
     void movePlayer(char key, float dt);
+
+    std::vector<Ball> getBallsFired();
+    void emptyBallsFired();
     
     sf::Vector2f calculateTargetVector(sf::Vector2f mousePos);
 
-    void shootGun(sf::Vector2f mousePosition,float dt);
+    void shootGun(sf::Vector2f mousePosition);
 };
 #endif
