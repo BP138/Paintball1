@@ -28,20 +28,16 @@ sf::Texture fieldTexture;
 fieldTexture.loadFromFile("green-grass-texture-background.png");
 field.setTexture(&fieldTexture);
 
-//Determine players per team and create game
-std::cout << "How many players per team? ";
-int pPerTeam = 0;
-std::cin >> pPerTeam;
-Game game(2, pPerTeam);
+//Create game
+Game game(2, 5);
 game.positionTeams(windowSize);
-
 std::cout << "Total players: " << game.getPlayers().size() << std::endl;
 std::cout << "Team 1 size: " << game.getTeam(0).size() << std::endl;
 std::cout << "Team 2 size: " << game.getTeam(1).size() << std::endl;
 
-
 //Create mouse position variable and set position of reticule shape
 sf::CircleShape reticule = createReticule();
+
 
 //Key event booleans
 bool wButton = false;
@@ -54,7 +50,7 @@ bool mouseLPressed = false;
 //Time. Still need to figure out how to make it more fixed or accurate
 sf::Clock clock;
 float dt = 0;
-sf::Time time;
+
 
 //Create event and start game loop
 sf::Event evnt;
@@ -74,7 +70,6 @@ while (window.isOpen())
                 //window resize event
             case sf::Event::Resized:
                 printf("New window width: %i New window height: %i\n", evnt.size.width, evnt.size.height);
-
                 break;
 
             //keyboard events
@@ -100,15 +95,12 @@ while (window.isOpen())
                 if (evnt.mouseButton.button == sf::Mouse::Left) mouseLPressed = false;
                 break;
 
-            
-
             /*
             //print text entered
             case sf::Event::TextEntered:
                 if(evnt.text.unicode < 128) printf("%c", evnt.text.unicode);
                 break;
             */
-
             default: break;
         }
     }

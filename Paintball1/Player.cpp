@@ -72,24 +72,12 @@ void Player::movePlayer(char key, float dt)
 }
 
 
-//Calculate target direction
-sf::Vector2f Player::calculateTargetVector(sf::Vector2f mousePos)
-{
-    sf::Vector2f targetVector = mousePos - player.getPosition();
-    sf::Vector2f normalizedVect = targetVector / static_cast<float>(sqrt((pow(targetVector.x, 2)) +
-        (pow(targetVector.y, 2))));
-    return normalizedVect;
-}
-
-
 //shoot
 void Player::shootGun(sf::Vector2f targetPosition)
 {
     if (ballsInHopper > 0)
     {
-        //std::cout << "Target position: " << "(" << targetPosition.x << "," << targetPosition.y << ")" << std::endl;
-        //std::cout << "Normalized vector: " << "(" << calculateTargetVector(targetPosition).x << "," << calculateTargetVector(targetPosition).y << ")" << std::endl;
-        Ball paintball(calculateTargetVector(targetPosition), player.getPosition());
+        Ball paintball (targetPosition, player.getPosition());
         ballsFired.push_back(paintball);
         ballsInHopper--;
     }
@@ -106,3 +94,4 @@ void Player::removeBall(int index)
 {
     ballsFired.erase(ballsFired.begin() + index);
 }
+

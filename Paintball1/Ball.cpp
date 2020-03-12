@@ -5,11 +5,14 @@ Ball::Ball()
     ball.setRadius(radius);
 }
 
-Ball::Ball(sf::Vector2f targVector, sf::Vector2f spawnPosition)
+Ball::Ball(sf::Vector2f targPosition, sf::Vector2f spawnPos)
 {
+    targetPosition = targPosition;
+    spawnPosition = spawnPos;
+    targetVector = targPosition - spawnPos;
+    calculateNormalizedVector();
     ball.setRadius(radius);
     ball.setPosition(spawnPosition);
-    targetVector = targVector;
     ball.setFillColor(sf::Color::Blue);
     ball.setOrigin(radius, radius);
 }
@@ -36,7 +39,16 @@ void Ball::setPosition(sf::Vector2f pPosition)
 
 void Ball::updateBall(float dt)
 {
-    ball.move(targetVector * velocity * dt);
-    std::cout << "Target vector: " << targetVector.x << " " << targetVector.y << std::endl;
+    ball.move(normalizedVect * velocity * dt);
     lifeTime = lifeTime + dt;
+}
+
+
+void Ball::calculateNormalizedVector()
+{
+    normalizedVect = targetVector / static_cast<float>(sqrt((pow(targetVector.x, 2)) +
+        (pow(targetVector.y, 2))));
+    std::cout << "Distance: " << sqrt(pow(targetPosition.x - spawnPosition.x, 2) + pow(targetPosition.y - spawnPosition.y, 2)) << std::endl;
+    std::cout << "target vector: " << targetVector.x << " " << targetVector.y << std::endl;
+    std::cout << "Normalized vector: " << normalizedVect.x << " " << normalizedVect.y << std::endl << std::endl;
 }

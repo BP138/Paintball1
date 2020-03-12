@@ -41,8 +41,8 @@ public:
     std::vector<Ball>& getBallsFired();
     void removeBall(int index);
     
-    sf::Vector2f calculateTargetVector(sf::Vector2f mousePos);
 
     void shootGun(sf::Vector2f mousePosition);
+
 };
 #endif
