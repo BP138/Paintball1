@@ -12,19 +12,21 @@ sf::Vector2f calculateReticulePosition(sf::RenderWindow &wndw);
 
 int main()
 {
-//Create Window
-sf::RenderWindow window(sf::VideoMode(400, 720), "Paintball!",
+//Create Window //x6
+sf::RenderWindow window(sf::VideoMode(720, 900), "Paintball!",
                         sf::Style::Close | sf::Style::Resize);
 window.setFramerateLimit(60);
 sf::Vector2u windowSize = window.getSize();
+window.setMouseCursorVisible(false);
 
 
 //Create field
-sf::RectangleShape field(sf::Vector2f(400.0f, 720.0f));
+//NXL 5 man field size: 150x120 feet
+//NXL 10 man field size: 200x150 feet
+sf::RectangleShape field(sf::Vector2f(720.0f, 900.0f));
 sf::Texture fieldTexture;
 fieldTexture.loadFromFile("green-grass-texture-background.png");
 field.setTexture(&fieldTexture);
-
 
 //Determine players per team and create game
 std::cout << "How many players per team? ";
@@ -69,6 +71,12 @@ while (window.isOpen())
                 window.close();
                 break;
 
+                //window resize event
+            case sf::Event::Resized:
+                printf("New window width: %i New window height: %i\n", evnt.size.width, evnt.size.height);
+
+                break;
+
             //keyboard events
             case sf::Event::KeyPressed:
                 if (evnt.key.code == sf::Keyboard::W) wButton = true;
@@ -92,11 +100,7 @@ while (window.isOpen())
                 if (evnt.mouseButton.button == sf::Mouse::Left) mouseLPressed = false;
                 break;
 
-            //window resize event
-            case sf::Event::Resized:
-                printf("New window width: %i New window height: %i\n", evnt.size.width, evnt.size.height);
-                windowSize = window.getSize();
-                break;
+            
 
             /*
             //print text entered
@@ -132,7 +136,8 @@ while (window.isOpen())
     {
         for (int b = 0; b < game.getPlayers().at(p).getBallsFired().size(); b++)
         {
-            game.getPlayers().at(p).getBallsFired().at(b).shootBall(dt);
+            if (game.getPlayers().at(p).getBallsFired().at(b).getLifeTime() > 2.0f) game.getPlayers().at(p).removeBall(b);
+            else game.getPlayers().at(p).getBallsFired().at(b).updateBall(dt);
         }
     }
 
@@ -143,16 +148,15 @@ while (window.isOpen())
     window.clear();
     window.draw(field);
     window.draw(reticule);
-
+    //Render players
     for (int p = 0; p < game.getNumberofPlayers(); p++){
         window.draw(game.getPlayers().at(p).getPlayer());
     }
-
+    //Render players' balls fired
     for (int p = 0; p < game.getNumberofPlayers(); p++)
     {
         for (int b = 0; b < game.getPlayers().at(p).getBallsFired().size(); b++)
         {
-            std::cout << b << std::endl;
             window.draw(game.getPlayers().at(p).getBallsFired().at(b).getBall());
         }
     }

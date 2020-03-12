@@ -80,7 +80,6 @@ int Game::getNumberofPlayers()
 
 
 //Position Teams
-//this still needs to be fixed to put the teams evenly across the middle
 void Game::positionTeams(sf::Vector2u wSize)
 {
     {   float playerWidth = players.at(0).getRadius() * 2.0f,
@@ -94,7 +93,7 @@ void Game::positionTeams(sf::Vector2u wSize)
             {
                 for (int p = 0; p < playersPerTeam; p++)
                 {
-                    teams.at(t).at(p)->setPosition(((wSize.x / 2.0f) - (teamWidth / 2.0f)) + offset, 700.0f);
+                    teams.at(t).at(p)->setPosition(((wSize.x / 2.0f) - (teamWidth / 2.0f)) + offset, wSize.y - 20);
                     offset += playerWidth + (spacing / playersPerTeam);
                 }
             }
@@ -102,7 +101,7 @@ void Game::positionTeams(sf::Vector2u wSize)
             {
                 for (int p = 0; p < playersPerTeam; p++)
                 {
-                    teams.at(t).at(p)->setPosition(((wSize.x / 2.0f) - (teamWidth / 2.0f)) + offset, 20.0f);
+                    teams.at(t).at(p)->setPosition(((wSize.x / 2.0f) - (teamWidth / 2.0f)) + offset, 20);
                     offset += playerWidth + (spacing / playersPerTeam);
                 }
             }

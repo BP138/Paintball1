@@ -8,7 +8,7 @@
 class Player
 {
 private:
-    const float plRADIUS = 8.0f;
+    const float plRADIUS = 12.0f;
 
     int playerID = -1,
         teamID = -1;
@@ -39,7 +39,7 @@ public:
     void movePlayer(char key, float dt);
 
     std::vector<Ball>& getBallsFired();
-    void emptyBallsFired();
+    void removeBall(int index);
     
     sf::Vector2f calculateTargetVector(sf::Vector2f mousePos);
 

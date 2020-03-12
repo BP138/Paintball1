@@ -92,7 +92,6 @@ void Player::shootGun(sf::Vector2f targetPosition)
         Ball paintball(calculateTargetVector(targetPosition), player.getPosition());
         ballsFired.push_back(paintball);
         ballsInHopper--;
-        std::cout << "balls fired: " << ballsFired.size() << std::endl;
     }
     else std::cout << "Hopper empty";
     
@@ -103,7 +102,7 @@ std::vector<Ball>& Player::getBallsFired()
 {
     return ballsFired;
 }
-void Player::emptyBallsFired()
+void Player::removeBall(int index)
 {
-    ballsFired.clear();
+    ballsFired.erase(ballsFired.begin() + index);
 }

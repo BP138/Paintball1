@@ -24,12 +24,19 @@ float Ball::getVelocity()
     return velocity;
 }
 
+float Ball::getLifeTime()
+{
+    return lifeTime;
+}
+
 void Ball::setPosition(sf::Vector2f pPosition)
 {
     ball.setPosition(pPosition);
 }
 
-void Ball::shootBall(float dt)
+void Ball::updateBall(float dt)
 {
-    ball.move(targetVector * velocity * dt); 
+    ball.move(targetVector * velocity * dt);
+    std::cout << "Target vector: " << targetVector.x << " " << targetVector.y << std::endl;
+    lifeTime = lifeTime + dt;
 }
