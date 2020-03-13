@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Player.h"
 #include "Ball.h"
+#include "Bunker.h"
 
 sf::CircleShape createReticule();
 sf::Vector2f calculateReticulePosition(sf::RenderWindow &wndw);
@@ -152,13 +153,24 @@ while (window.isOpen())
             window.draw(game.getPlayers().at(p).getBallsFired().at(b).getBall());
         }
     }
+    Bunker cylinder(0);
+    window.draw(cylinder.getBunker());
 
     window.display();
 
    
+
+
     //Restart the clock and set dt to the time since the clock was last restarted
     dt = clock.restart().asSeconds();
 }
+
+
+
+
+
+
+
 
 
 return 0;

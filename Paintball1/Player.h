@@ -1,7 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Ball.h"
-#include "Gun.h"
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -18,7 +17,6 @@ private:
 
     sf::Vector2f targetPosition;  
     std::vector<Ball> ballsFired;
-    Gun gun;
 
 public:
     Player();
