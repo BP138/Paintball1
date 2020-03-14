@@ -5,9 +5,6 @@
 #include "Collision.h"
 
 
-
-
-
 class Game
 {
 private:
@@ -23,13 +20,14 @@ public:
 	Game(int noTeams, int pPerTeam);
 	~Game() {};
 
-	Collision& getCollision();
+
 	std::vector<Bunker>& getBunkers();
 	std::vector<std::vector<Player*>>& getTeams();
 	std::vector<Player*>& getTeam(int index);
 	Player& getTeamPlayer(int teamIndex, int playerIndex);
 	std::vector<Player>& getPlayers();
 	int getNumberofPlayers();
+	Collision& getCollision();
 	void positionTeams(sf::Vector2u wSize);
 
 

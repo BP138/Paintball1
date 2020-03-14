@@ -6,6 +6,8 @@ class Ball
 {
 private:
     sf::CircleShape ball;
+    int shooterID = -1,
+        teamID = -1;
     float radius = 3.1f,
         speed = 700.0f,
         lifeTime = 0;
@@ -22,6 +24,9 @@ public:
 
     sf::CircleShape getBall();
     float getVelocity();
+    void setShooterID(int tID, int pID);
+    int getShooterID();
+    int getTeamID();
     float getLifeTime();
     void setPosition(sf::Vector2f pPosition);
     void updateBall(float dt);

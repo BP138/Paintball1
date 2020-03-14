@@ -21,9 +21,10 @@ Game::Game()
         }
         teams.push_back(tempTeam);
     }
-
     Bunker bunker(0);
     bunkers.push_back(bunker);
+    Bunker bunker2(1);
+    bunkers.push_back(bunker2);
     collision.getCopyOfBunkers(bunkers);
 }
 
@@ -51,6 +52,8 @@ Game::Game(int noTeams, int pPerTeam)
     }
     Bunker bunker(0);
     bunkers.push_back(bunker);
+    Bunker bunker2(1);
+    bunkers.push_back(bunker2);
     collision.getCopyOfBunkers(bunkers);
 }
 

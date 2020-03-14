@@ -35,7 +35,7 @@ bool Collision::checkBallCollision(const sf::CircleShape& ball)
                 return true;
             }
         }
-        else if (b.bunkerType == 1)
+        else if (b.bunkerType == 1) //rect bunker
         {
             for (int X = b.getRecBunker().getPosition().x; X < b.getRecBunker().getPosition().x + b.getRecBunker().getSize().x; X++)
             {
@@ -52,6 +52,15 @@ bool Collision::checkBallCollision(const sf::CircleShape& ball)
             }
         }
 
+    }
+    for (auto& p : *players)
+    {
+        if (ball.get)
+        {
+            if (sqrt(pow(ball.getPosition().x - b.getCircleBunker().getPosition().x, 2) + pow(ball.getPosition().y - b.getCircleBunker().getPosition().y, 2))
+                < ball.getRadius() + b.getCircleBunker().getRadius())
+            {
+        }
     }
     return false;
 }

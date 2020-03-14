@@ -2,7 +2,6 @@
 #include <iostream>
 
 
-
 Player::Player()
 {
     plColor = sf::Color::Red;
@@ -24,39 +23,38 @@ float Player::getRadius()
     return plRADIUS;
 }
 
-
 //Player ID getter and setter
 int Player::getPlayerID()
 {
     return playerID;
 }
+
 void Player::setPlayerID(int pID)
 {
     playerID = pID;
 }
-
 
 //Player's team ID getter and setter
 int Player::getTeamID()
 {
     return teamID;
 }
+
 void Player::setTeamID(int tID)
 {
     teamID = tID;
 }
-
 
 //Player position getter and setter
 sf::Vector2f Player::getPosition()
 {
     return player.getPosition();
 }
+
 void Player::setPosition(float x, float y)
 {
     player.setPosition(x, y);
 }
-
 
 //movePlayer
 void Player::movePlayer(char key, float dt)
@@ -71,6 +69,17 @@ void Player::movePlayer(char key, float dt)
     }
 }
 
+//get balls fired
+std::vector<Ball>& Player::getBallsFired()
+{
+    return ballsFired;
+}
+
+//remove ball at
+void Player::removeBall(int index)
+{
+    ballsFired.erase(ballsFired.begin() + index);
+}
 
 //shoot
 void Player::shootGun(sf::Vector2f targetPosition)
@@ -78,20 +87,9 @@ void Player::shootGun(sf::Vector2f targetPosition)
     if (ballsInHopper > 0)
     {
         Ball paintball(targetPosition, player.getPosition());
+        paintball.
         ballsFired.push_back(paintball);
         ballsInHopper--;
     }
     else std::cout << "Hopper empty";
-
 }
-
-
-std::vector<Ball>& Player::getBallsFired()
-{
-    return ballsFired;
-}
-void Player::removeBall(int index)
-{
-    ballsFired.erase(ballsFired.begin() + index);
-}
-

@@ -8,7 +8,6 @@
 class Bunker
 {
 private:
-	int sides;
 	int radius = 0;
 
 	sf::Vector2f size;
@@ -19,6 +18,7 @@ public:
 	Bunker();
 	Bunker(int bunker);
 	~Bunker() {};
+
 	sf::CircleShape getCircleBunker();
 	sf::RectangleShape getRecBunker();
 };

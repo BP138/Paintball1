@@ -16,8 +16,9 @@ public:
 	Collision();
 	~Collision() {};
 
-	bool checkBallCollision(const sf::CircleShape& ball);
 	void getCopyOfBunkers(const std::vector<Bunker>& bunkerss);
+	bool checkBallCollision(const sf::CircleShape& ball);
+	
 	//void getCopyOfPlayers(const std::vector<Player>& playerss);
 
 };

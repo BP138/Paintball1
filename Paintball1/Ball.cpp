@@ -1,5 +1,6 @@
 #include "Ball.h"
 #include <iostream>
+
 Ball::Ball(sf::Vector2f spawnPos)
 {
     spawnPosition = spawnPos;
@@ -21,24 +22,46 @@ Ball::Ball(sf::Vector2f targPosition, sf::Vector2f spawnPos)
     ball.setOrigin(radius, radius);
 }
 
+//get ball shape
 sf::CircleShape Ball::getBall() { return ball; }
 
+//get set velocity
 float Ball::getVelocity() { return velocity; }
 
+//get playerID and teamID of player that shot ball
+void Ball::setShooterID(int tID, int pID)
+{
+    teamID = tID;
+    shooterID = pID;
+}
+
+int Ball::getShooterID()
+{
+    return shooterID;
+}
+
+int Ball::getTeamID()
+{
+    return teamID;
+}
+
+//get amount of time ball has existed
 float Ball::getLifeTime() { return lifeTime; }
 
+//set position of ball
 void Ball::setPosition(sf::Vector2f pPosition)
 {
     ball.setPosition(pPosition);
 }
 
+//Update ball
 void Ball::updateBall(float dt)
 {
     ball.move(normalizedVect * velocity * dt);
     lifeTime = lifeTime + dt;
 }
 
-
+//Calculate and set normalized vector
 void Ball::calculateNormalizedVector()
 {
     normalizedVect = targetVector / static_cast<float>(sqrt((pow(targetVector.x, 2)) +
