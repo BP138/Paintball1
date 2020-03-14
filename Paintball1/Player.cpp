@@ -45,6 +45,12 @@ void Player::setTeamID(int tID)
     teamID = tID;
 }
 
+bool Player::getHitStatus()
+{
+    return hit;
+}
+
+
 //Player position getter and setter
 sf::Vector2f Player::getPosition()
 {
@@ -87,9 +93,14 @@ void Player::shootGun(sf::Vector2f targetPosition)
     if (ballsInHopper > 0)
     {
         Ball paintball(targetPosition, player.getPosition());
-        paintball.
+        paintball.setShooterID(teamID, playerID);
         ballsFired.push_back(paintball);
         ballsInHopper--;
     }
     else std::cout << "Hopper empty";
+}
+
+void Player::setHit(bool h)
+{
+    hit = h;
 }

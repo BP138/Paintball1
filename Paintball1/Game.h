@@ -26,6 +26,7 @@ public:
 	std::vector<Player*>& getTeam(int index);
 	Player& getTeamPlayer(int teamIndex, int playerIndex);
 	std::vector<Player>& getPlayers();
+	void removePlayerByID(int pID);
 	int getNumberofPlayers();
 	Collision& getCollision();
 	void positionTeams(sf::Vector2u wSize);

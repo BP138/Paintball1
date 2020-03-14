@@ -12,24 +12,21 @@ void Collision::getCopyOfBunkers(const std::vector<Bunker>& bunkerss)
         bunkers.push_back(bunk);
     }
 }
-/*
-void Collision::getCopyOfPlayers(const std::vector<Player>& playerss)
-{
-    for (auto& playr : playerss)
-    {
-        players->push_back(playr);
-    }
-}
-*/
 
-bool Collision::checkBallCollision(const sf::CircleShape& ball)
+void Collision::getCopyOfPlayers(std::vector<Player>& playerss)
+{
+    players = &playerss;
+}
+
+
+bool Collision::checkBallCollision(Ball& ball)
 {
     for (auto& b : bunkers)
     {
         if (b.bunkerType == 0) //circle bunker
         {
-            if (sqrt(pow(ball.getPosition().x - b.getCircleBunker().getPosition().x, 2) + pow(ball.getPosition().y - b.getCircleBunker().getPosition().y, 2))
-                < ball.getRadius() + b.getCircleBunker().getRadius())
+            if (sqrt(pow(ball.getBall().getPosition().x - b.getCircleBunker().getPosition().x, 2) + pow(ball.getBall().getPosition().y - b.getCircleBunker().getPosition().y, 2))
+                < ball.getBall().getRadius() + b.getCircleBunker().getRadius())
             {
                 std::cout << "Collided" << std::endl;
                 return true;
@@ -41,8 +38,8 @@ bool Collision::checkBallCollision(const sf::CircleShape& ball)
             {
                 for (int Y = b.getRecBunker().getPosition().y; Y < b.getRecBunker().getPosition().y + b.getRecBunker().getSize().y * 0.02; Y++)
                 {
-                    if (sqrt(pow(ball.getPosition().x - X, 2) + pow(ball.getPosition().y - Y, 2))
-                        < ball.getRadius())
+                    if (sqrt(pow(ball.getBall().getPosition().x - X, 2) + pow(ball.getBall().getPosition().y - Y, 2))
+                        < ball.getBall().getRadius())
                     {
                         std::cout << "Hit!" << std::endl;
                         return true;
@@ -53,13 +50,25 @@ bool Collision::checkBallCollision(const sf::CircleShape& ball)
         }
 
     }
-    for (auto& p : *players)
+    for (Player& p : *players)
     {
-        if (ball.get)
+        if (ball.getTeamID() != p.getTeamID())
         {
-            if (sqrt(pow(ball.getPosition().x - b.getCircleBunker().getPosition().x, 2) + pow(ball.getPosition().y - b.getCircleBunker().getPosition().y, 2))
-                < ball.getRadius() + b.getCircleBunker().getRadius())
+            if (sqrt(pow(ball.getBall().getPosition().x - p.getPosition().x, 2) + pow(ball.getBall().getPosition().y - p.getPosition().y, 2))
+                < ball.getBall().getRadius() + p.getRadius())
             {
+                p.setHit(true);
+                /*
+                for (int i = 0; i < players->size(); i++)
+                {
+                    if (players->at(i).getPlayerID() == p.getPlayerID())
+                    {
+                        players->erase(players->begin() + i);
+                    }
+                }
+                std::cout << "Players size: " << players->size() << std::endl;
+                */
+            }
         }
     }
     return false;

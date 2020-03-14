@@ -3,58 +3,64 @@
 
 Game::Game()
 {
-    for (int p = 0; p < noOfTeams * playersPerTeam; p++)
+for (int p = 0; p < noOfTeams * playersPerTeam; p++)
+{
+    Player player;
+    player.setPlayerID(p);
+    player.setTeamID(p / playersPerTeam);
+    players.push_back(player);
+}
+int pCount = 0;
+for (int t = 0; t < noOfTeams; t++)
+{
+    std::vector<Player*> tempTeam;
+    for (unsigned int i = 0; i < players.size() / noOfTeams; i++)
     {
-        Player player;
-        player.setPlayerID(p);
-        player.setTeamID(p / playersPerTeam);
-        players.push_back(player);
+        tempTeam.push_back(&players.at(pCount));
+        pCount++;
     }
-    int pCount = 0;
-    for (int t = 0; t < noOfTeams; t++)
-    {
-        std::vector<Player*> tempTeam;
-        for (unsigned int i = 0; i < players.size() / noOfTeams; i++)
-        {
-            tempTeam.push_back(&players.at(pCount));
-            pCount++;
-        }
-        teams.push_back(tempTeam);
-    }
-    Bunker bunker(0);
-    bunkers.push_back(bunker);
-    Bunker bunker2(1);
-    bunkers.push_back(bunker2);
-    collision.getCopyOfBunkers(bunkers);
+    teams.push_back(tempTeam);
+}
+
+collision.getCopyOfPlayers(players);
+
+Bunker bunker(0);
+bunkers.push_back(bunker);
+Bunker bunker2(1);
+bunkers.push_back(bunker2);
+collision.getCopyOfBunkers(bunkers);
 }
 
 Game::Game(int noTeams, int pPerTeam)
 {
-    noOfTeams = noTeams;
-    playersPerTeam = pPerTeam;
-    for (int p = 0; p < noOfTeams * playersPerTeam; p++)
+noOfTeams = noTeams;
+playersPerTeam = pPerTeam;
+for (int p = 0; p < noOfTeams * playersPerTeam; p++)
+{
+    Player player;
+    player.setPlayerID(p);
+    player.setTeamID(p / playersPerTeam);
+    players.push_back(player);
+}
+int pCount = 0;
+for (int t = 0; t < noOfTeams; t++)
+{
+    std::vector<Player*> tempTeam;
+    for (unsigned int i = 0; i < players.size()/noOfTeams; i++)
     {
-        Player player;
-        player.setPlayerID(p);
-        player.setTeamID(p / playersPerTeam);
-        players.push_back(player);
+        tempTeam.push_back(&players.at(pCount));
+        pCount++;
     }
-    int pCount = 0;
-    for (int t = 0; t < noOfTeams; t++)
-    {
-        std::vector<Player*> tempTeam;
-        for (unsigned int i = 0; i < players.size() / noOfTeams; i++)
-        {
-            tempTeam.push_back(&players.at(pCount));
-            pCount++;
-        }
-        teams.push_back(tempTeam);
-    }
-    Bunker bunker(0);
-    bunkers.push_back(bunker);
-    Bunker bunker2(1);
-    bunkers.push_back(bunker2);
-    collision.getCopyOfBunkers(bunkers);
+    teams.push_back(tempTeam);
+}
+
+collision.getCopyOfPlayers(players);
+
+Bunker bunker(0);
+bunkers.push_back(bunker);
+Bunker bunker2(1);
+bunkers.push_back(bunker2);
+collision.getCopyOfBunkers(bunkers);
 }
 
 std::vector<Bunker>& Game::getBunkers()
@@ -87,6 +93,18 @@ std::vector<Player>& Game::getPlayers()
 {
     return players;
 }
+
+void Game::removePlayerByID(int pID)
+{
+    for (int p = 0; p < players.size(); p++)
+    {
+        if (players.at(p).getPlayerID() == pID)
+        {
+            players.erase(players.begin() + p);
+        }
+    }
+}
+
 int Game::getNumberofPlayers()
 {
     return players.size();

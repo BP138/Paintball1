@@ -114,7 +114,7 @@ int main()
         if (mouseLPressed)
         {
             mouseLPressed = false;
-            game.getTeamPlayer(0, 0).shootGun(mousePosition);
+            game.getTeamPlayer(0, 0).shootGun(mousePosition); std::cout << "Players in main size: " << game.getPlayers().size();
         }
         //update players' balls
         for (int p = 0; p < game.getNumberofPlayers(); p++)
@@ -122,8 +122,17 @@ int main()
             for (int b = 0; b < game.getPlayers().at(p).getBallsFired().size(); b++)
             {
                 game.getPlayers().at(p).getBallsFired().at(b).updateBall(dt);
-                if (game.getCollision().checkBallCollision(game.getPlayers().at(p).getBallsFired().at(b).getBall())) game.getPlayers().at(p).removeBall(b);
+                if (game.getCollision().checkBallCollision(game.getPlayers().at(p).getBallsFired().at(b))) game.getPlayers().at(p).removeBall(b);
                 else if (game.getPlayers().at(p).getBallsFired().at(b).getLifeTime() > 1.85f) game.getPlayers().at(p).removeBall(b);
+            }
+        }
+        //Update players
+        for (auto& p : game.getPlayers())
+        {
+            if (p.getHitStatus())
+            {
+                //game.removePlayerByID(p.getPlayerID());
+                
             }
         }
 
