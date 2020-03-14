@@ -131,7 +131,7 @@ int main()
         {
             if (p.getHitStatus())
             {
-                //game.removePlayerByID(p.getPlayerID());
+                game.removePlayerByID(p.getPlayerID());
                 
             }
         }

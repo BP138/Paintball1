@@ -21,7 +21,6 @@ for (int t = 0; t < noOfTeams; t++)
     }
     teams.push_back(tempTeam);
 }
-
 collision.getCopyOfPlayers(players);
 
 Bunker bunker(0);
