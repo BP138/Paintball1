@@ -1,7 +1,11 @@
+#pragma once
 #include <vector>
+#include "Bunker.h"
 #include "Player.h"
-#ifndef GAME_H
-#define GAME_H
+#include "Collision.h"
+
+
+
 
 
 class Game
@@ -9,16 +13,18 @@ class Game
 private:
 	int noOfTeams = 2,
 		playersPerTeam = 5;
-		
+	std::vector<Bunker> bunkers;
 	std::vector<Player> players;
 	std::vector<std::vector<Player*>> teams;
-
+	Collision collision;
 
 public:
 	Game();
 	Game(int noTeams, int pPerTeam);
 	~Game() {};
 
+	Collision& getCollision();
+	std::vector<Bunker>& getBunkers();
 	std::vector<std::vector<Player*>>& getTeams();
 	std::vector<Player*>& getTeam(int index);
 	Player& getTeamPlayer(int teamIndex, int playerIndex);
@@ -28,15 +34,5 @@ public:
 
 
 };
-#endif
-
-
-
-
-
-
-
-
-
 
 

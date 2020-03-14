@@ -1,18 +1,25 @@
+#pragma once
 #include <SFML/Graphics.hpp>
-#ifndef BUNKER_H
-#define BUNKER_H
+
+
 
 
 
 class Bunker
 {
-private: 
+private:
 	int sides;
+	int radius = 0;
+
+	sf::Vector2f size;
 	sf::CircleShape cylinder;
-public: 
+	sf::RectangleShape rectangle;
+public:
+	int bunkerType = 1000;
 	Bunker();
 	Bunker(int bunker);
 	~Bunker() {};
-	sf::CircleShape getBunker();
+	sf::CircleShape getCircleBunker();
+	sf::RectangleShape getRecBunker();
 };
-#endif // !BUNKER_H
+

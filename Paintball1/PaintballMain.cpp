@@ -1,69 +1,62 @@
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <vector>
 #include "Game.h"
-#include "Player.h"
-#include "Ball.h"
-#include "Bunker.h"
 
 sf::CircleShape createReticule();
-sf::Vector2f calculateReticulePosition(sf::RenderWindow &wndw);
+sf::Vector2f calculateReticulePosition(sf::RenderWindow& wndw);
 
 
 
 int main()
 {
-//Create Window //x6
-sf::RenderWindow window(sf::VideoMode(720, 900), "Paintball!",
-                        sf::Style::Close | sf::Style::Resize);
-window.setFramerateLimit(60);
-sf::Vector2u windowSize = window.getSize();
-window.setMouseCursorVisible(false);
+    //Create Window //x6
+    sf::RenderWindow window(sf::VideoMode(720, 900), "Paintball!",
+        sf::Style::Close | sf::Style::Resize);
+    window.setFramerateLimit(60);
+    sf::Vector2u windowSize = window.getSize();
+    window.setMouseCursorVisible(false);
 
+    //Create field
+    //NXL 5 man field size: 150x120 feet
+    //NXL 10 man field size: 200x150 feet
+    sf::RectangleShape field(sf::Vector2f(720.0f, 900.0f));
+    sf::Texture fieldTexture;
+    fieldTexture.loadFromFile("green-grass-texture-background.png");
+    field.setTexture(&fieldTexture);
 
-//Create field
-//NXL 5 man field size: 150x120 feet
-//NXL 10 man field size: 200x150 feet
-sf::RectangleShape field(sf::Vector2f(720.0f, 900.0f));
-sf::Texture fieldTexture;
-fieldTexture.loadFromFile("green-grass-texture-background.png");
-field.setTexture(&fieldTexture);
+    //Create game
+    Game game(2, 5);
+    game.positionTeams(windowSize);
+    std::cout << "Total players: " << game.getPlayers().size() << std::endl;
+    std::cout << "Team 1 size: " << game.getTeam(0).size() << std::endl;
+    std::cout << "Team 2 size: " << game.getTeam(1).size() << std::endl;
 
-//Create game
-Game game(2, 5);
-game.positionTeams(windowSize);
-std::cout << "Total players: " << game.getPlayers().size() << std::endl;
-std::cout << "Team 1 size: " << game.getTeam(0).size() << std::endl;
-std::cout << "Team 2 size: " << game.getTeam(1).size() << std::endl;
+    //Create mouse position variable and set position of reticule shape
+    sf::CircleShape reticule = createReticule();
 
-//Create mouse position variable and set position of reticule shape
-sf::CircleShape reticule = createReticule();
+    //Key event booleans
+    bool wButton = false;
+    bool aButton = false;
+    bool sButton = false;
+    bool dButton = false;
+    bool mouseLPressed = false;
 
+    //Time. Still need to figure out how to make it more fixed or accurate
+    sf::Clock clock;
+    float dt = 0;
 
-//Key event booleans
-bool wButton = false;
-bool aButton = false;
-bool sButton = false;
-bool dButton = false;
-bool mouseLPressed = false;
+    //Create event and start game loop
+    sf::Event evnt;
 
-
-//Time. Still need to figure out how to make it more fixed or accurate
-sf::Clock clock;
-float dt = 0;
-
-
-//Create event and start game loop
-sf::Event evnt;
-
-while (window.isOpen())
-{
-    //Events
-    while(window.pollEvent(evnt))
+    while (window.isOpen())
     {
-        switch(evnt.type)
+        //Events
+        while (window.pollEvent(evnt))
         {
-            //window closed event
+            switch (evnt.type)
+            {
+                //window closed event
             case sf::Event::Closed:
                 window.close();
                 break;
@@ -73,12 +66,12 @@ while (window.isOpen())
                 printf("New window width: %i New window height: %i\n", evnt.size.width, evnt.size.height);
                 break;
 
-            //keyboard events
+                //keyboard events
             case sf::Event::KeyPressed:
                 if (evnt.key.code == sf::Keyboard::W) wButton = true;
                 if (evnt.key.code == sf::Keyboard::A) aButton = true;
-                if (evnt.key.code == sf::Keyboard::S) sButton = true; 
-                if (evnt.key.code == sf::Keyboard::D) dButton = true; 
+                if (evnt.key.code == sf::Keyboard::S) sButton = true;
+                if (evnt.key.code == sf::Keyboard::D) dButton = true;
                 break;
 
             case sf::Event::KeyReleased:
@@ -88,7 +81,7 @@ while (window.isOpen())
                 if (evnt.key.code == sf::Keyboard::D) dButton = false;
                 break;
 
-            //mouse events
+                //mouse events
             case sf::Event::MouseButtonPressed:
                 if (evnt.mouseButton.button == sf::Mouse::Left) mouseLPressed = true;
                 break;
@@ -96,84 +89,91 @@ while (window.isOpen())
                 if (evnt.mouseButton.button == sf::Mouse::Left) mouseLPressed = false;
                 break;
 
-            /*
-            //print text entered
-            case sf::Event::TextEntered:
-                if(evnt.text.unicode < 128) printf("%c", evnt.text.unicode);
-                break;
-            */
+                /*
+                //print text entered
+                case sf::Event::TextEntered:
+                    if(evnt.text.unicode < 128) printf("%c", evnt.text.unicode);
+                    break;
+                */
             default: break;
+            }
         }
-    }
 
-    //Keybinds
-    if(wButton) game.getTeamPlayer(0,0).movePlayer('w', dt);//up
-    if(aButton) game.getTeamPlayer(0,0).movePlayer('a', dt);//left
-    if(dButton) game.getTeamPlayer(0,0).movePlayer('d', dt);//right
-    if(sButton) game.getTeamPlayer(0,0).movePlayer('s', dt); //down
+        //Keybinds
+        if (wButton) game.getTeamPlayer(0, 0).movePlayer('w', dt);//up
+        if (aButton) game.getTeamPlayer(0, 0).movePlayer('a', dt);//left
+        if (dButton) game.getTeamPlayer(0, 0).movePlayer('d', dt);//right
+        if (sButton) game.getTeamPlayer(0, 0).movePlayer('s', dt); //down
 
-    //Set reticule position
-    sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
-    reticule.setPosition(mousePosition);
+        //Set mouse and reticule position
+        sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+        reticule.setPosition(mousePosition);
 
-
-    //shoot
-    //Need to figure out how to put this in its own function
-    if(mouseLPressed)
-    {
-        mouseLPressed = false;
-        game.getTeamPlayer(0, 0).shootGun(mousePosition);
-    }
-
-    for (int p = 0; p < game.getNumberofPlayers(); p++)
-    {
-        for (int b = 0; b < game.getPlayers().at(p).getBallsFired().size(); b++)
+        //shoot
+        //Need to figure out how to put this in its own function
+        if (mouseLPressed)
         {
-            if (game.getPlayers().at(p).getBallsFired().at(b).getLifeTime() > 2.0f) game.getPlayers().at(p).removeBall(b);
-            else game.getPlayers().at(p).getBallsFired().at(b).updateBall(dt);
+            mouseLPressed = false;
+            game.getTeamPlayer(0, 0).shootGun(mousePosition);
         }
-    }
-
-
-
-    
-    //Rendering
-    window.clear();
-    window.draw(field);
-    window.draw(reticule);
-    //Render players
-    for (int p = 0; p < game.getNumberofPlayers(); p++){
-        window.draw(game.getPlayers().at(p).getPlayer());
-    }
-    //Render players' balls fired
-    for (int p = 0; p < game.getNumberofPlayers(); p++)
-    {
-        for (int b = 0; b < game.getPlayers().at(p).getBallsFired().size(); b++)
+        //update players' balls
+        for (int p = 0; p < game.getNumberofPlayers(); p++)
         {
-            window.draw(game.getPlayers().at(p).getBallsFired().at(b).getBall());
+            for (int b = 0; b < game.getPlayers().at(p).getBallsFired().size(); b++)
+            {
+                game.getPlayers().at(p).getBallsFired().at(b).updateBall(dt);
+                if (game.getCollision().checkBallCollision(game.getPlayers().at(p).getBallsFired().at(b).getBall())) game.getPlayers().at(p).removeBall(b);
+                else if (game.getPlayers().at(p).getBallsFired().at(b).getLifeTime() > 1.85f) game.getPlayers().at(p).removeBall(b);
+            }
         }
+
+
+        //Rendering
+        window.clear();
+        window.draw(field);
+        window.draw(reticule);
+        //Render players
+        for (int p = 0; p < game.getNumberofPlayers(); p++)
+        {
+            window.draw(game.getPlayers().at(p).getPlayer());
+        }
+        //Render bunkers
+        for (int b = 0; b < game.getBunkers().size(); b++)
+        {
+            if (game.getBunkers().at(b).bunkerType == 0) window.draw(game.getBunkers().at(b).getCircleBunker());
+            else if (game.getBunkers().at(b).bunkerType == 1) window.draw(game.getBunkers().at(b).getRecBunker());
+        }
+        //Render players' balls fired
+        for (int p = 0; p < game.getNumberofPlayers(); p++)
+        {
+            for (int b = 0; b < game.getPlayers().at(p).getBallsFired().size(); b++)
+            {
+                window.draw(game.getPlayers().at(p).getBallsFired().at(b).getBall());
+            }
+        }
+
+
+
+
+
+        window.display();
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //Restart the clock and set dt to the time since the clock was last restarted
+        dt = clock.restart().asSeconds();
     }
-    Bunker cylinder(0);
-    window.draw(cylinder.getBunker());
-
-    window.display();
-
-   
-
-
-    //Restart the clock and set dt to the time since the clock was last restarted
-    dt = clock.restart().asSeconds();
-}
-
-
-
-
-
-
-
-
-
-return 0;
+    return 0;
 }
 
 
@@ -187,7 +187,20 @@ sf::CircleShape createReticule()
     return ret;
 }
 
-sf::Vector2f calculateReticulePosition(sf::RenderWindow &wndw)
+sf::Vector2f calculateReticulePosition(sf::RenderWindow& wndw)
 {
     return static_cast<sf::Vector2f>(sf::Mouse::getPosition(wndw));
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

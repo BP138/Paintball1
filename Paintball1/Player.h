@@ -1,8 +1,10 @@
+#pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Ball.h"
-#ifndef PLAYER_H
-#define PLAYER_H
+
+
+
 
 class Player
 {
@@ -15,12 +17,12 @@ private:
     sf::CircleShape player;
     sf::Color plColor;
 
-    sf::Vector2f targetPosition;  
+    sf::Vector2f targetPosition;
     std::vector<Ball> ballsFired;
 
 public:
     Player();
-    ~Player(){};
+    ~Player() {};
 
     sf::CircleShape getPlayer();
     float getRadius();
@@ -30,7 +32,7 @@ public:
 
     int getTeamID();
     void setTeamID(int tID);
-    
+
     sf::Vector2f getPosition();
     void setPosition(float x, float y);
 
@@ -38,9 +40,9 @@ public:
 
     std::vector<Ball>& getBallsFired();
     void removeBall(int index);
-    
+
 
     void shootGun(sf::Vector2f mousePosition);
 
 };
-#endif
+

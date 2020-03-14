@@ -21,6 +21,10 @@ Game::Game()
         }
         teams.push_back(tempTeam);
     }
+
+    Bunker bunker(0);
+    bunkers.push_back(bunker);
+    collision.getCopyOfBunkers(bunkers);
 }
 
 Game::Game(int noTeams, int pPerTeam)
@@ -45,6 +49,14 @@ Game::Game(int noTeams, int pPerTeam)
         }
         teams.push_back(tempTeam);
     }
+    Bunker bunker(0);
+    bunkers.push_back(bunker);
+    collision.getCopyOfBunkers(bunkers);
+}
+
+std::vector<Bunker>& Game::getBunkers()
+{
+    return bunkers;
 }
 
 
@@ -77,35 +89,39 @@ int Game::getNumberofPlayers()
     return players.size();
 }
 
+Collision& Game::getCollision()
+{
+    return collision;
+}
 
 
 //Position Teams
 void Game::positionTeams(sf::Vector2u wSize)
 {
     {   float playerWidth = players.at(0).getRadius() * 2.0f,
-              teamWidth = (playersPerTeam * playerWidth),
-              spacing, offset;
-        for (unsigned int t = 0; t < teams.size(); t++)
+        teamWidth = (playersPerTeam * playerWidth),
+        spacing, offset;
+    for (unsigned int t = 0; t < teams.size(); t++)
+    {
+        spacing = 20.0f;
+        offset = 0.0f;
+        if (t % 2 == 0)
         {
-            spacing = 20.0f;
-            offset = 0.0f;
-            if (t % 2 == 0)
+            for (int p = 0; p < playersPerTeam; p++)
             {
-                for (int p = 0; p < playersPerTeam; p++)
-                {
-                    teams.at(t).at(p)->setPosition(((wSize.x / 2.0f) - (teamWidth / 2.0f)) + offset, wSize.y - 20);
-                    offset += playerWidth + (spacing / playersPerTeam);
-                }
-            }
-            else
-            {
-                for (int p = 0; p < playersPerTeam; p++)
-                {
-                    teams.at(t).at(p)->setPosition(((wSize.x / 2.0f) - (teamWidth / 2.0f)) + offset, 20);
-                    offset += playerWidth + (spacing / playersPerTeam);
-                }
+                teams.at(t).at(p)->setPosition(((wSize.x / 2.0f) - (teamWidth / 2.0f)) + offset, wSize.y - 20);
+                offset += playerWidth + (spacing / playersPerTeam);
             }
         }
+        else
+        {
+            for (int p = 0; p < playersPerTeam; p++)
+            {
+                teams.at(t).at(p)->setPosition(((wSize.x / 2.0f) - (teamWidth / 2.0f)) + offset, 20);
+                offset += playerWidth + (spacing / playersPerTeam);
+            }
+        }
+    }
     }
 }
 

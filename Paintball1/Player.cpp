@@ -1,6 +1,6 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
 #include "Player.h"
+#include <iostream>
+
 
 
 Player::Player()
@@ -61,13 +61,13 @@ void Player::setPosition(float x, float y)
 //movePlayer
 void Player::movePlayer(char key, float dt)
 {
-    switch(key)
+    switch (key)
     {
-        case 'w': player.move(0.0f, -200.0f * dt); break;
-        case 'a': player.move(-200.0f * dt, 0.0f); break;
-        case 'd': player.move(200.0f * dt, 0.0f); break;
-        case 's': player.move(0.0f, 200.0f * dt); break;
-        default: break;
+    case 'w': player.move(0.0f, -200.0f * dt); break;
+    case 'a': player.move(-200.0f * dt, 0.0f); break;
+    case 'd': player.move(200.0f * dt, 0.0f); break;
+    case 's': player.move(0.0f, 200.0f * dt); break;
+    default: break;
     }
 }
 
@@ -77,12 +77,12 @@ void Player::shootGun(sf::Vector2f targetPosition)
 {
     if (ballsInHopper > 0)
     {
-        Ball paintball (targetPosition, player.getPosition());
+        Ball paintball(targetPosition, player.getPosition());
         ballsFired.push_back(paintball);
         ballsInHopper--;
     }
     else std::cout << "Hopper empty";
-    
+
 }
 
 

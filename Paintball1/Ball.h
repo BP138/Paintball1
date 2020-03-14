@@ -1,5 +1,4 @@
-#ifndef BALL_H
-#define BALL_H
+#pragma once
 #include <SFML/Graphics.hpp>
 
 
@@ -8,19 +7,18 @@ class Ball
 private:
     sf::CircleShape ball;
     float radius = 3.1f,
-          speed = 700.0f,
-          lifeTime = 0;
+        speed = 700.0f,
+        lifeTime = 0;
     sf::Vector2f targetVector,
-                 targetPosition,
-                 spawnPosition,
-                 normalizedVect;
+        targetPosition,
+        spawnPosition,
+        normalizedVect;
     float velocity = 500.0f;
-    
 
 public:
-    Ball();
+    Ball(sf::Vector2f spawnPos);
     Ball(sf::Vector2f targPosition, sf::Vector2f spawnPosition);
-    ~Ball(){};
+    ~Ball() {};
 
     sf::CircleShape getBall();
     float getVelocity();
@@ -30,4 +28,3 @@ public:
     void calculateNormalizedVector();
 
 };
-#endif

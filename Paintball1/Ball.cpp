@@ -1,8 +1,12 @@
 #include "Ball.h"
 #include <iostream>
-Ball::Ball()
+Ball::Ball(sf::Vector2f spawnPos)
 {
+    spawnPosition = spawnPos;
     ball.setRadius(radius);
+    ball.setPosition(spawnPosition);
+    ball.setFillColor(sf::Color::Blue);
+    ball.setOrigin(radius, radius);
 }
 
 Ball::Ball(sf::Vector2f targPosition, sf::Vector2f spawnPos)
@@ -17,20 +21,11 @@ Ball::Ball(sf::Vector2f targPosition, sf::Vector2f spawnPos)
     ball.setOrigin(radius, radius);
 }
 
-sf::CircleShape Ball::getBall()
-{
-    return ball;
-}
+sf::CircleShape Ball::getBall() { return ball; }
 
-float Ball::getVelocity()
-{
-    return velocity;
-}
+float Ball::getVelocity() { return velocity; }
 
-float Ball::getLifeTime()
-{
-    return lifeTime;
-}
+float Ball::getLifeTime() { return lifeTime; }
 
 void Ball::setPosition(sf::Vector2f pPosition)
 {
@@ -52,3 +47,4 @@ void Ball::calculateNormalizedVector()
     std::cout << "target vector: " << targetVector.x << " " << targetVector.y << std::endl;
     std::cout << "Normalized vector: " << normalizedVect.x << " " << normalizedVect.y << std::endl << std::endl;
 }
+
